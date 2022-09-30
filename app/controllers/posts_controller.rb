@@ -3,12 +3,14 @@ class PostsController < ApplicationController
 
   def index
     posts = Post.all
-    render json: posts
+    render json: posts.to_json(only: [:title, :content],
+    include: [:tags, author: { only: [:name]}])
   end
 
   def show
     post = Post.find(params[:id])
-    render json: post
+    render json: post.to_json(only: [:title, :content],
+    include: [:tags, author: { only: [:name]}])
   end
 
   private
@@ -18,3 +20,4 @@ class PostsController < ApplicationController
   end
 
 end
+
